@@ -59,8 +59,10 @@ const ProcedurePreview: React.FC<ProcedurePreviewProps> = ({
             <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
               <div class="opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 flex space-x-2">
                 <span class="bg-white bg-opacity-90 rounded-full p-2">
-                  <ZoomIn className="w-4 h-4 text-gray-700" />
-                </span>
+                <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 103.65 3.65a7.5 7.5 0 0012.99 12.99zM10 7v6m3-3H7" />
+              </svg>                </span>
               </div>
             </div>
           </div>

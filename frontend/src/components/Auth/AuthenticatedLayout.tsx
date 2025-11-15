@@ -29,15 +29,14 @@ const AuthenticatedLayout: React.FC<AuthenticatedLayoutProps> = ({
   if (!isAuthenticated) {
     return <p className="p-6">Vous devez vous connecter...</p>;
   }
-
   return (
-
     <Suspense fallback={<div><LoadingSpinner/></div>}>
-     <AppLayout role={user?.userType || "client"}>
-     {children}
-    </AppLayout>
-  </Suspense>
-   
+      <AppLayout role={user?.userType || "client"}>
+        <div className="w-full px-4 sm:px-6 lg:px-8">
+          {children}
+        </div>
+      </AppLayout>
+    </Suspense>
   );
 };
 

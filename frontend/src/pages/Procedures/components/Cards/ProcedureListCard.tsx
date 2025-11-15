@@ -10,17 +10,18 @@ const ProcedureListCard = ({proceduresData}) => {
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
-                Procédures de Réparation
+                Repairs procedures 
               </h2>
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                Guides et tutoriels pour les réparations courantes
+                You can follow a procedure a solve a problem on your own for simple tasks 
+                In case there is no technician available.
               </p>
             </div>
             <Link
               to="/procedures"
               className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm font-medium flex items-center"
             >
-              Voir tout
+              View all
               <ChevronRight className="w-4 h-4 ml-1" />
             </Link>
           </div>

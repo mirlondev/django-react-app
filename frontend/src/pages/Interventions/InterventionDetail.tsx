@@ -7,7 +7,7 @@ import {
   Drill,
   Truck,
   Edit,
-  Trash2
+  Trash2,
 } from "lucide-react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
@@ -31,7 +31,7 @@ import { getStatusBadge } from "../../utils/badge";
 import LoadingSpinner from "../../components/Layout/LoadingSpinner";
 
 interface InterventionWithDetails extends Intervention {
-  ticket?: Ticket ;
+  ticket?: Ticket;
   technician?: Technician;
 }
 
@@ -78,18 +78,16 @@ const InterventionDetail = () => {
     }
   };
 
-
   if (loading) {
     return (
       <AuthenticatedLayout>
-        <LoadingSpinner/>
+        <LoadingSpinner />
       </AuthenticatedLayout>
     );
   }
 
   if (!intervention) {
-    navigate('/interventions')
-    
+    navigate("/interventions");
   }
 
   return (
@@ -98,10 +96,7 @@ const InterventionDetail = () => {
         {/* Header */}
         <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-4">
-            <Button
-              onClick={() => navigate("/interventions")}
-              variant="ghost"
-            >
+            <Button onClick={() => navigate("/interventions")} variant="ghost">
               <ArrowLeft className="w-4 h-4 mr-2" />
             </Button>
             <div>
@@ -114,17 +109,24 @@ const InterventionDetail = () => {
             </div>
           </div>
 
-          <div className="w-full flex flex-col gap-2 sm:flex sm:flex-row sm:gap-4 sm:justify-end" >
+          <div className="w-full flex flex-col gap-2 sm:flex sm:flex-row sm:gap-4 sm:justify-end">
             <Link to={`/interventions/${intervention.id}/edit`}>
               <Button variant="primary" className="w-full">
                 <Edit className="w-4 h-4" />
                 Edit
               </Button>
             </Link>
-            <Button variant="danger" onClick={() => setShowDeleteModal(true)} className="max-w-full">
-              <Trash2 className="w-4 h-4" />
-              Delete
-            </Button>
+
+            {user?.userType === "admin" && (
+              <Button
+                variant="danger"
+                onClick={() => setShowDeleteModal(true)}
+                className="max-w-full"
+              >
+                <Trash2 className="w-4 h-4" />
+                Delete
+              </Button>
+            )}
           </div>
         </div>
 
@@ -187,10 +189,10 @@ const InterventionDetail = () => {
                   </div>
                   <div>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
-                      Hourly Rate
+                      Transport cost
                     </p>
                     <p className="text-lg font-semibold text-black dark:text-white">
-                      {formatCurrency(intervention.hourly_rate)}
+                      {formatCurrency(intervention.transport_cost)}
                     </p>
                   </div>
                 </div>
@@ -274,19 +276,21 @@ const InterventionDetail = () => {
         </div>
 
         {/* Delete Modal */}
-        {showDeleteModal && <DeleteConfirmationModal
-          isOpen={showDeleteModal}
-          onClose={() => {
-            setShowDeleteModal(false);
-            setIntervention(null); // reset pour éviter overlay bloquant
-          }}
-          onConfirm={handleDelete}
-          dataName={
-            intervention
-              ? `the intervention for ticket "${intervention.title}"`
-              : undefined
-          }
-        />}
+        {showDeleteModal && (
+          <DeleteConfirmationModal
+            isOpen={showDeleteModal}
+            onClose={() => {
+              setShowDeleteModal(false);
+              setIntervention(null); // reset pour éviter overlay bloquant
+            }}
+            onConfirm={handleDelete}
+            dataName={
+              intervention
+                ? `the intervention for ticket "${intervention.title}"`
+                : undefined
+            }
+          />
+        )}
       </div>
     </AuthenticatedLayout>
   );

@@ -163,9 +163,8 @@ const TicketDetail = () => {
                 <h1 className="text-3xl font-bold text-slate-900 dark:text-white leading-tight pr-4">
                   {ticket.title}
                 </h1>
-                <div className="flex items-center gap-2 bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 dark:from-blue-900/30 dark:to-indigo-900/30 dark:text-blue-300 px-4 py-2 rounded-full border border-blue-100 dark:border-blue-800 shadow-sm">
-                  <Hash className=" hidden lg:block w-4 h-4" />
-                  <span className=" hidden lg:block  font-mono font-semibold  ">
+                <div className="flex items-center  gap-2 bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-700 dark:from-blue-900/30 dark:to-indigo-900/30 dark:text-blue-300 px-4 py-2 rounded-full border border-blue-100 dark:border-blue-800 shadow-sm">
+                  <span className=" hidden lg:block text-sm  font-mono font-semibold  ">
                     {ticket.code}
                   </span>
                 </div>
@@ -314,7 +313,7 @@ const TicketDetail = () => {
                     <div key={image.id} className="group relative">
                       <div
                         className="aspect-square bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800 rounded-xl overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-slate-500/10 border border-slate-200/50 dark:border-slate-600/50"
-                        onClick={() => window.open(image.image, "_blank")}
+                        onClick={() => window.open(image.image_url, "_blank")}
                       >
                         <img
                           src={image.image_url}

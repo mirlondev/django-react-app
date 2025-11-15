@@ -12,10 +12,10 @@ const TicketCard = ({intervention}) => {
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <span className="text-sm text-gray-600 dark:text-gray-400">
-            Ticket ID
+            Ticket Code
           </span>
           <span className="font-medium text-black dark:text-white">
-            #{intervention.ticket.id?.substring(0, 8)}
+            {intervention.ticket.code?.substring(0, 8)}
           </span>
         </div>
         <div className="border-t pt-3 dark:border-gray-700">

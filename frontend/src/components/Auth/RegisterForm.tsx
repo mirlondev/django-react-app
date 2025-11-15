@@ -29,7 +29,7 @@ const  RegisterForm: React.FC<RegisterFormProps> = ({ onToggleForm }) => {
   const [error, setError] = useState("");
   const [redirecting, setRedirecting] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const {login} = useAuth();
+  const {login, register} = useAuth();
 
   const navigate = useNavigate();
 
@@ -80,12 +80,10 @@ const  RegisterForm: React.FC<RegisterFormProps> = ({ onToggleForm }) => {
         ? `/auth/register/client/`
         : `/auth/register/technician/`;*/
 
-        const url = '/auth/register/client/';
   
   
       // création de l'utilisateur
-      await api.post(url, payload);
-  
+      await register(payload);
       // login automatique
       await login(payload.username, payload.password, true);
   
@@ -119,7 +117,7 @@ const  RegisterForm: React.FC<RegisterFormProps> = ({ onToggleForm }) => {
   }
 
   return (
-    <div className="w-full max-w-md mx-auto">
+    <div className="w-full max-w-md mx-auto m-6 p-6">
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
         {/* Header */}
         <div className="text-center mb-8">

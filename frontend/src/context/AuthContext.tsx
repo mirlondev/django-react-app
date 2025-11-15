@@ -11,11 +11,7 @@ import toast from "react-hot-toast";
 
 const AuthContext = createContext(null);
 
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) throw new Error("useAuth must be used within AuthProvider");
-  return context;
-};
+
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -134,12 +130,10 @@ export const AuthProvider = ({ children }) => {
       setIsLoading(true);
       setError(null);
       try {
-        const endpoint =
-          userData.userType === "client"
-            ? "/auth/register/client/"
-            : "/auth/register/technician/";
-  
-        const { userType, ...registrationData } = userData;
+        const endpoint ='/auth/register/';
+    
+
+        const { ...registrationData } = userData;
   
         const response = await api.post(endpoint, registrationData);
   
@@ -232,7 +226,7 @@ export const AuthProvider = ({ children }) => {
     } finally {
       handleLogout();
       setIsLoading(false);
-      window.location.href = "/login";
+      window.location.href = "/";
     }
   }, [token, handleLogout]);
 
@@ -252,7 +246,15 @@ export const AuthProvider = ({ children }) => {
     [user, token, login, logout, register, isLoading, error]
   );
 
+
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 };
+
+const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) throw new Error("useAuth must be used within AuthProvider");
+  return context;
+};
+export { useAuth }

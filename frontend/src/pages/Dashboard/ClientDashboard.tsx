@@ -62,7 +62,7 @@ const ClientDashboard = () => {
       console.error("Error fetching user ratings:", error);
     }
   };
-
+console.log(user.name);
   const fetchProcedures=async ()=>{
     setLoading(true);
     try {

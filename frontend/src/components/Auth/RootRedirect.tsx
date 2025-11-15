@@ -8,10 +8,11 @@ const RootRedirect: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isLoading) return; // attendre la fin du chargement
+    if (isLoading) return; // on attend
 
     if (!user) {
-      navigate("/login", { replace: true });
+      // ici on envoie l’utilisateur non connecté vers la landing page
+      navigate("/home", { replace: true });
       return;
     }
 
@@ -20,8 +21,8 @@ const RootRedirect: React.FC = () => {
     if (userType === "admin") navigate("/admin/dashboard", { replace: true });
     else if (userType === "technician") navigate("/technician/dashboard", { replace: true });
     else if (userType === "client") navigate("/client/dashboard", { replace: true });
-    else navigate("/login", { replace: true });
-  }, [user?.userType, isLoading, navigate]); // ⚠️ dépendances stables
+    else navigate("/landing", { replace: true });
+  }, [user, isLoading, navigate]);
 
   return null;
 };

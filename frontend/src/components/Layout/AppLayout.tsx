@@ -8,7 +8,13 @@ import Sidebar from "./SideBar";
 
 const GlobalSearch = lazy(() => import("../Search/GlobalSearch"));
 
-export default function AppLayout({ children, roleProp }: { children: React.ReactNode; roleProp?: string }) {
+export default function AppLayout({
+  children,
+  roleProp,
+}: {
+  children: React.ReactNode;
+  roleProp?: string;
+}) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -33,32 +39,56 @@ export default function AppLayout({ children, roleProp }: { children: React.Reac
       const res = await notificationsAPI.getUnread();
       setNotifications(res.data);
     } catch (err) {
-      console.error('Failed to fetch notifications:', err);
+      console.error("Failed to fetch notifications:", err);
     }
   };
 
   const links = [
-    { name: "Dashboard", icon: <Home className="w-5 h-5" />, path: `/${role}/dashboard` },
-    { name: "Tickets", icon: <Clipboard className="w-5 h-5" />, path: "/tickets" },
-    { name: "Procedures", icon: <BookOpen className="w-5 h-5" />, path: "/procedures" },
+    {
+      name: "Dashboard",
+      icon: <Home className="w-5 h-5" />,
+      path: `/${role}/dashboard`,
+    },
+    {
+      name: "Tickets",
+      icon: <Clipboard className="w-5 h-5" />,
+      path: "/tickets",
+    },
+    {
+      name: "Procedures",
+      icon: <BookOpen className="w-5 h-5" />,
+      path: "/procedures",
+    },
   ];
 
   if (user?.userType === "admin") {
-    links.push({ name: "Users", icon: <Users className="w-5 h-5" />, path: "/admin/users" });
-    links.push({ name: "Interventions", icon: <ToolCase className="w-5 h-5" />, path: "/interventions" });
+    links.push({
+      name: "Users",
+      icon: <Users className="w-5 h-5" />,
+      path: "/admin/users",
+    });
+    links.push({
+      name: "Interventions",
+      icon: <ToolCase className="w-5 h-5" />,
+      path: "/interventions",
+    });
   } else if (user?.userType === "technician") {
-    links.push({ name: "Interventions", icon: <ToolCase className="w-5 h-5" />, path: "/interventions" });
+    links.push({
+      name: "Interventions",
+      icon: <ToolCase className="w-5 h-5" />,
+      path: "/interventions",
+    });
   }
 
   if (!role) return <p className="p-6">Chargement du rôle...</p>;
 
   return (
     <div className="flex min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
-      <Sidebar 
-        links={links} 
-        user={user} 
-        sidebarOpen={sidebarOpen} 
-        setSidebarOpen={setSidebarOpen} 
+      <Sidebar
+        links={links}
+        user={user}
+        sidebarOpen={sidebarOpen}
+        setSidebarOpen={setSidebarOpen}
       />
       <div className="flex-1 flex flex-col">
         <Header
@@ -72,7 +102,8 @@ export default function AppLayout({ children, roleProp }: { children: React.Reac
           handleLogout={handleLogout}
           toggleGlobalSearch={() => setShowGlobalSearch(!showGlobalSearch)}
         />
-        <main className="flex-1 m-5 p-4 bg-gray-50 dark:bg-gray-900 rounded-2xl overflow-y-auto transition-colors duration-200">
+
+        <main className="flex-1 w-full max-w-full mx-auto px-4 sm:px-6 lg:px-8 py-4 bg-gray-50 dark:bg-gray-900 rounded-2xl overflow-y-auto transition-colors duration-200">
           {children}
         </main>
       </div>

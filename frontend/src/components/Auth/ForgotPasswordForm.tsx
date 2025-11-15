@@ -42,6 +42,8 @@ const ForgotPasswordForm: React.FC<{ onBackToLogin: () => void }> = ({ onBackToL
   
     return (
       <div className="w-full max-w-md mx-auto my-4 ">
+            <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-white">
+
         <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8 dark:bg-gray-800 ">
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full mb-4">
@@ -105,6 +107,7 @@ const ForgotPasswordForm: React.FC<{ onBackToLogin: () => void }> = ({ onBackToL
               Back to Sign In
             </button>
           </div>
+        </div>
         </div>
       </div>
     );

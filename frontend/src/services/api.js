@@ -1,7 +1,6 @@
 import axios from "axios";
-
-const API_BASE_URL = "http://localhost:8000/api";
-
+const API_BASE_URL = "https://backend-support-production.up.railway.app/api/";
+//const API_BASE_URL = "http://127.0.0.1:8000/api/";
 const api = axios.create({
   baseURL: API_BASE_URL,
 });
@@ -74,7 +73,13 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
+api.interceptors.request.use((config) => {
+  if (config.url && !config.url.endsWith('/')) {
+    config.url += '/';
+  }
+  return config;
+});
+api.get("/auth/me/").then(res => console.log(res.data));
 // Auth API
 export const authAPI = {
   login: (credentials) => api.post("/auth/login/", credentials),
@@ -90,10 +95,15 @@ export const authAPI = {
 export const ticketsAPI = {
   getAll: () => api.get("/tickets/"),
 
-  create: (ticket) =>
-    api.post("/tickets/", ticket, {
-      headers: { "Content-Type": "multipart/form-data" },
-    }),
+  create: (ticket) => {
+    const isFormData = ticket instanceof FormData;
+  
+    return api.post("/tickets/", ticket, {
+      headers: isFormData
+        ? { "Content-Type": "multipart/form-data" }
+        : { "Content-Type": "application/json" },
+    });
+  },
 
   getById: (id) => api.get(`/tickets/${id}/`),
   update: (id, ticket) => api.patch(`/tickets/${id}/`, ticket),

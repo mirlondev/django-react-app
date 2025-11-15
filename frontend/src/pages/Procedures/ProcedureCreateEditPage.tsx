@@ -49,7 +49,7 @@ const ParentProcedureComponent: React.FC = () => {
         const response = await proceduresAPI.update(id, savedProcedure);
         createdProcedure = response.data;
         procedureId = id;
-        navigate(`/procedures/${ procedureId}`);
+        navigate(`/procedures/${procedureId}`);
       } else {
         // Create new procedure
         const response = await proceduresAPI.create(savedProcedure);
@@ -58,7 +58,7 @@ const ParentProcedureComponent: React.FC = () => {
         procedureId = createdProcedure.id;
 
         // Redirect to edit page for new procedures
-        navigate(`/procedures/edit/${procedureId}`, { replace: true });
+        navigate(`/procedures/${procedureId}`, { replace: true });
       }
 
       // === Étape 2 : Upload les images en attente ===
@@ -88,9 +88,7 @@ const ParentProcedureComponent: React.FC = () => {
       // === Étape 3 : Traiter le contenu pour remplacer les data URLs ===
       if (savedProcedure.content && pendingImages.length > 0 && createdProcedure) {
         try {
-          // This would require additional logic to replace data URLs in content
-          // with actual image URLs from the uploaded images
-          // For now, we'll refresh the procedure to get the updated content
+
           await fetchProcedure();
         } catch (contentError) {
           console.error('Error processing content images:', contentError);

@@ -4,6 +4,7 @@ import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/Layout/ProtectedRoute";
 import { Toaster } from "react-hot-toast";
 import ErrorBoundary from "./ErrobBoundary";
+import LandingPage from "./pages/Home/LandingPage";
 
 // Lazy loading des pages
 const LoadingSpinner = lazy(() => import( "./components/Layout/LoadingSpinner"));
@@ -40,6 +41,7 @@ const App = () => {
               {/* Public routes */}
               <Route path="/" element={<RootRedirect />} />
               <Route path="/login" element={<AuthPage />} />
+              <Route path="/home" element={<LandingPage />} />
               <Route
                 path="/forgot/password"
                 element={<ForgotPasswordForm onBackToLogin={() => window.location.replace("/login")} />}

@@ -18,9 +18,7 @@ import {
   ProcedureImage,
   ProcedureAttachment,
 } from "../../../../types";
-import CustomEditor from "../../../../utils/CustomEditor";
-// Comment out the custom editor temporarily
-// import CustomEditor from '../../../../utils/CustomEditor';
+// import CustomEditor from '../../../../utils/CustomEditor'; // toujours commenté
 import Font from "@ckeditor/ckeditor5-font/src/font";
 import Button from "../../../../components/ui/Button";
 import toast from "react-hot-toast";
@@ -59,7 +57,7 @@ interface ProcedureFormProps {
   CustomUploadAdapter: any;
 }
 
-const ProcedureForm= ({
+const ProcedureForm = ({
   procedure,
   title,
   description,
@@ -89,12 +87,11 @@ const ProcedureForm= ({
   onDeleteAttachment,
   onPendingImage,
   CustomUploadAdapter,
-}:ProcedureFormProps) => {
+}: ProcedureFormProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const attachmentInputRef = useRef<HTMLInputElement>(null);
   const editorRef = useRef<any>(null);
 
-  // Safer CKEditor configuration using the classic build
   const editorConfiguration = {
     toolbar: {
       items: [
@@ -103,10 +100,8 @@ const ProcedureForm= ({
         "bold",
         "italic",
         "|",
-
         "bulletedList",
         "numberedList",
-        "|",
         "|",
         "blockQuote",
         "insertTable",
@@ -135,8 +130,6 @@ const ProcedureForm= ({
     table: {
       contentToolbar: ["tableColumn", "tableRow", "mergeTableCells"],
     },
-
-    // Ensure proper initialization
     initialData: content || "",
     placeholder: "Rédigez le contenu détaillé de votre procédure...",
   };
@@ -147,7 +140,6 @@ const ProcedureForm= ({
 
     const uploadPromises = Array.from(files).map(async (file) => {
       if (!procedure?.id) {
-        // Gestion temporaire des images avant sauvegarde
         onPendingImage(file);
         const tempImageUrl = URL.createObjectURL(file);
         const tempImage: ProcedureImage = {
@@ -159,7 +151,6 @@ const ProcedureForm= ({
         };
         return tempImage;
       } else {
-        // Upload vers l'API
         const formData = new FormData();
         formData.append("image", file);
         formData.append("procedure_id", procedure.id);
@@ -210,7 +201,6 @@ const ProcedureForm= ({
 
   const handleEditorReady = (editor: any) => {
     try {
-      // Only set up file upload if CustomUploadAdapter is available
       if (CustomUploadAdapter && editor.plugins.get("FileRepository")) {
         editor.plugins.get("FileRepository").createUploadAdapter = (
           loader: any
@@ -227,10 +217,7 @@ const ProcedureForm= ({
     error: any,
     { willEditorRestart }: { willEditorRestart: boolean }
   ) => {
-    console.error("CKEditor error:", error);
-
     if (!willEditorRestart) {
-      // If the editor won't restart automatically, you might want to show a fallback
       console.warn(
         "CKEditor failed to initialize. Consider using a fallback textarea."
       );
@@ -244,9 +231,8 @@ const ProcedureForm= ({
         <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden transform transition-transform duration-300 hover:shadow-2xl">
           <div className="px-8 py-6 border-b border-gray-200 dark:border-gray-700 sm:flex sm:flex-row space-y-2 sm:items-center sm:justify-between flex flex-col">
             <div className="flex flex-col md:flex-row gap-4 md:space-x-4">
-
               <div>
-              <BookOpen className="w-6 h-6 text-white" />
+                <BookOpen className="w-6 h-6 text-white" />
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                   {procedure
                     ? "Modifier la procédure"
@@ -422,9 +408,9 @@ const ProcedureForm= ({
                   onChange={(e) => onStatusChange(e.target.value)}
                   className="w-full px-4 py-4 border-2 border-gray-200 dark:border-gray-600 rounded-xl focus:ring-4 focus:ring-blue-200 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all duration-300"
                 >
-                  <option value="draft">📝 Brouillon</option>
-                  <option value="published">🌍 Publié</option>
-                  <option value="archived">🗃️ Archivé</option>
+                  <option value="draft">Brouillon</option>
+                  <option value="published"> Publié</option>
+                  <option value="archived"> Archivé</option>
                 </select>
               </div>
             </div>
@@ -432,7 +418,7 @@ const ProcedureForm= ({
             {/* Éditeur de contenu */}
             <div>
               <label className="block text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                📝 Contenu détaillé de la procédure *
+                 Contenu détaillé de la procédure *
               </label>
               <div className="border-2 border-gray-200 dark:border-gray-600 rounded-xl overflow-hidden transition-all duration-300 focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-blue-200">
                 <div style={{ minHeight: "500px" }}>
@@ -454,7 +440,7 @@ const ProcedureForm= ({
                 </div>
               </div>
               <p className="mt-3 text-sm text-gray-600 dark:text-gray-400">
-                💡 Utilisez la barre d'outils pour formater votre contenu,
+                 Utilisez la barre d'outils pour formater votre contenu,
                 ajouter des liens, listes, etc.
               </p>
             </div>
@@ -462,7 +448,7 @@ const ProcedureForm= ({
             {/* Section Images */}
             <div>
               <label className="block text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                🖼️ Images supplémentaires
+                 Images supplémentaires
               </label>
               <div
                 onClick={() => fileInputRef.current?.click()}
@@ -516,7 +502,7 @@ const ProcedureForm= ({
             {procedure?.id && (
               <div>
                 <label className="block text-lg font-semibold text-gray-900 dark:text-white mb-3">
-                  📎 Pièces jointes
+                   Pièces jointes
                 </label>
                 <div
                   onClick={() => attachmentInputRef.current?.click()}
